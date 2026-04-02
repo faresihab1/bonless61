@@ -1,6 +1,8 @@
 import 'package:bonless61/core/theme/app_colors.dart';
 import 'package:bonless61/screens/home_screen.dart';
 import 'package:bonless61/screens/menu_screen.dart';
+import 'package:bonless61/screens/orders_screen.dart';
+import 'package:bonless61/screens/profile_screen.dart';
 import 'package:bonless61/screens/rewards_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,18 +20,8 @@ class _NavigatorState extends State<AppNavigator> {
     Homescreen(),
     MenuScreen(),
     RewardsScreen(),
-    Center(
-      child: Text(
-        'Orders',
-        style: TextStyle(color: Colors.white, fontSize: 24),
-      ),
-    ),
-    Center(
-      child: Text(
-        'Profile',
-        style: TextStyle(color: Colors.white, fontSize: 24),
-      ),
-    ),
+    OrdersScreen(),
+    ProfileScreen(),
   ];
 
   @override
