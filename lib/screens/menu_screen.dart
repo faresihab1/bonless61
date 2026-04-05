@@ -1,6 +1,8 @@
+import 'package:bonless61/screens/order_screen.dart';
 import 'package:bonless61/wigets/widgetexport.dart';
 import 'package:flutter/material.dart';
 import 'package:bonless61/core/theme/app_colors.dart';
+import 'package:get/route_manager.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -153,7 +155,7 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              const Column(
+               Column(
                 children: [
                   FeaturedMenuCard(
                     image: 'assets/deal.png',
@@ -161,6 +163,9 @@ class MenuScreen extends StatelessWidget {
                     subtitle: 'Tortilla wrap packed with\nloaded boneless flavor.',
                     price: '440 SYP',
                     calories: '1240 CAL',
+                    onTap: () {
+                      Get.to(() => OrderScreen());
+                    },
                   ),
                   SizedBox(height: 16),
                   FeaturedMenuCard(
@@ -169,6 +174,9 @@ class MenuScreen extends StatelessWidget {
                     subtitle: 'Stacked crispy chicken with\nsauce and crunchy slaw.',
                     price: '520 SYP',
                     calories: '980 CAL',
+                    onTap: () {
+                      Get.to(() => OrderScreen());
+                    },
                   ),
                 ],
               ),
@@ -203,66 +211,71 @@ class MenuItemCard extends StatelessWidget {
         color: const Color(0xFF1E1E1E),
         borderRadius: BorderRadius.circular(18),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                image,
-                width: 90,
-                height: 90,
-                fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: (){
+          Get.to(()=> OrderScreen());
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  image,
+                  width: 90,
+                  height: 90,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      color: Colors.white38,
-                      fontSize: 13,
+                    const SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        color: Colors.white38,
+                        fontSize: 13,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      color: AppColors.primaryRed,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                    const SizedBox(height: 10),
+                    Text(
+                      price,
+                      style: const TextStyle(
+                        color: AppColors.primaryRed,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                color: AppColors.primaryRed,
-                borderRadius: BorderRadius.circular(16),
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryRed,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 28,
+                ),
               ),
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 28,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -306,6 +319,7 @@ class FeaturedMenuCard extends StatelessWidget {
   final String subtitle;
   final String price;
   final String calories;
+  final VoidCallback? onTap;
 
   const FeaturedMenuCard({
     super.key,
@@ -314,91 +328,99 @@ class FeaturedMenuCard extends StatelessWidget {
     required this.subtitle,
     required this.price,
     required this.calories,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(18),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF1E1E1E),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
-                child: Image.asset(
-                  image,
-                  height: 240,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 14,
-                right: 14,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryRed,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    price,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+                    child: Image.asset(
+                      image,
+                      height: 240,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
+                  Positioned(
+                    top: 14,
+                    right: 14,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryRed,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       child: Text(
-                        title,
+                        price,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          calories,
+                          style: const TextStyle(
+                            color: Colors.white38,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     Text(
-                      calories,
+                      subtitle,
                       style: const TextStyle(
                         color: Colors.white38,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
+                        fontSize: 14,
+                        height: 1.4,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  subtitle,
-                  style: const TextStyle(
-                    color: Colors.white38,
-                    fontSize: 14,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

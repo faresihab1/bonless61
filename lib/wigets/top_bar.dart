@@ -1,4 +1,7 @@
+import 'package:bonless61/screens/notifications_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,7 +20,11 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             Stack(
               children: [
-                const Icon(Icons.notifications, color: Colors.white),
+                GestureDetector(
+                  onTap: (){
+                    Get.to(() => const NotificationsScreen());
+                  },
+                  child: const Icon(Icons.notifications, color: Colors.white)),
                 Positioned(
                   right: 0,
                   top: 0,
